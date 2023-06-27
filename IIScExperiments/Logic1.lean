@@ -81,7 +81,8 @@ using `intro`, `exact` and `apply`.
 
 /-- Every proposition implies itself. -/
 example : P → P := by
-  sorry
+  intro p
+  exact p
 
 /-
 
@@ -99,7 +100,9 @@ So the next level is asking you prove that `P → (Q → P)`.
 
 -/
 example : P → Q → P := by
-  sorry
+  intro p
+  intro q
+  exact p
 
 /-- If we know `P`, and we also know `P → Q`, we can deduce `Q`. 
 This is called "Modus Ponens" by logicians. -/

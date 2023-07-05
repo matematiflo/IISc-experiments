@@ -155,20 +155,46 @@ example : (P → R) → (S → Q) → (R → T) → (Q → R) → S → T := by
   exact h (i (g s))
 
 example : (P → Q) → ((P → Q) → P) → Q := by
-  sorry
+  intro f
+  intro g
+  exact f (g f)
 
 example : ((P → Q) → R) → ((Q → R) → P) → ((R → P) → Q) → P := by
-  sorry
+  intro f
+  intro g
+  intro h
+  apply g
+  intro q
+  have f1 : P → Q := λ p => q
+  exact f f1
+
 
 example : ((Q → P) → P) → (Q → R) → (R → P) → P := by
-  sorry
+  intro f
+  intro g
+  intro h
+  have j : Q → P := λ q => h (g q)
+  exact f j
 
 example : (((P → Q) → Q) → Q) → (P → Q) := by
-  sorry
+  intro f
+  intro p
+  apply f
+  intro g
+  exact g p
 
 example :
-    (((P → Q → Q) → ((P → Q) → Q)) → R) →
-    ((((P → P) → Q) → (P → P → Q)) → R) →
-    (((P → P → Q) → ((P → P) → Q)) → R) → R := by
-  sorry
-
+(((P → Q → Q) → ((P → Q) → Q)) → R) →
+((((P → P) → Q) → (P → P → Q)) → R) →
+(((P → P → Q) → ((P → P) → Q)) → R) → R := by
+  have iQ : Q → Q := λ q => q
+  have u : P → Q → Q := λ p => iQ
+  intro f
+  intro g
+  intro h
+  apply g
+  intro x
+  intro p1
+  intro p2
+  have iP : P → P := λ p => p
+  exact x iP

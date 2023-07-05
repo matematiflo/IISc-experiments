@@ -107,18 +107,33 @@ example : P → Q → P := by
 /-- If we know `P`, and we also know `P → Q`, we can deduce `Q`. 
 This is called "Modus Ponens" by logicians. -/
 example : P → (P → Q) → Q := by
-  sorry
+  intro p
+  intro f
+  apply f
+  exact p
 
 /-- `→` is transitive. That is, if `P → Q` and `Q → R` are true, then
   so is `P → R`. -/
 example : (P → Q) → (Q → R) → (P → R) := by
-  sorry
+  intro f
+  intro g
+  intro p
+  apply g
+  apply f
+  exact p
+
 
 -- If `h : P → Q → R` with goal `⊢ R` and you `apply h`, you'll get
 -- two goals! Note that tactics operate on only the first goal.
 example : (P → Q → R) → (P → Q) → (P → R) := by
-  sorry
-
+  intro f
+  intro g
+  intro p
+  apply f
+  exact p
+  apply g
+  exact p
+  
 /- 
 
 Here are some harder puzzles. They won't teach you anything new about
@@ -132,7 +147,12 @@ in this section, where you'll learn some more tactics.
 variable (S T : Prop)
 
 example : (P → R) → (S → Q) → (R → T) → (Q → R) → S → T := by
-  sorry
+  intro f
+  intro g
+  intro h
+  intro i
+  intro s
+  exact h (i (g s))
 
 example : (P → Q) → ((P → Q) → P) → Q := by
   sorry

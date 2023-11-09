@@ -94,11 +94,9 @@ lemma zero_add (n : MyNat) : 0 + n = n := by
 -- To prove the inductive step for a+b=b+a you need `succ_add`,
 -- the complement of `add_succ`. Note the naminh convention.
 lemma succ_add (a b : MyNat) : (succ a) + b = succ (a + b) := by
-  induction' b with d hd
-  -- base case
-  { rfl }
-  -- inductive step
-  { rw [add_succ, add_succ, hd] }
+  induction b with
+  | zero => { rfl } -- base case
+  | succ d ih => { rw [add_succ, add_succ, hd] }  -- inductive step
 
 -- Now we can prove commutativity of addition
 lemma add_comm (a b : MyNat) : a + b = b + a := by

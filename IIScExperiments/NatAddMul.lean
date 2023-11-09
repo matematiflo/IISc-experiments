@@ -112,10 +112,9 @@ lemma add_comm (a b : MyNat) : a + b = b + a := by
 -- Addition is defined by recursion on the right, so when proving
 -- associativity it's easiest to do induction on the rightmost variable.
 lemma add_assoc (a b c : MyNat) : (a + b) + c = a + (b + c) := by
-  induction' c with d hd
-  · rfl
-  · rw [add_succ, hd]
-    rfl
+  induction c with
+  | zero => rfl
+  | succ d hd => rw [add_succ, hd]; rfl
 
 -- Conclusion: naturals are an additive commutative monoid!
 instance : AddCommMonoid MyNat where

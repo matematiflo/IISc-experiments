@@ -185,7 +185,9 @@ theorem mul_succ (a b : MyNat) : a * succ b = a * b + a := rfl
 
 -- Induction will be crucial for the rest
 theorem zero_mul (a : MyNat) : 0 * a = 0 := by
-  sorry
+  induction a with
+  | zero => rfl
+  | succ d ih => rw [mul_succ, ih, add_zero]
 
 theorem succ_eq_add_one (a : MyNat) : succ a = a + 1 := by
   sorry

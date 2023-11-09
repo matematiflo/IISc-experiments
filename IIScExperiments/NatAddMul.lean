@@ -1,6 +1,6 @@
 import Mathlib.Algebra.Group.Defs
 
--- Define naturals recursively: 
+-- Define naturals recursively:
 inductive MyNat : Type
   -- zero is a natural;
 | zero : MyNat
@@ -14,7 +14,7 @@ What just happened? Lean added a new type (i.e set)
 to the system, called `MyNat`, with an element `MyNat.zero`,
 a function `succ : MyNat → MyNat`, and a principle
 of induction/recursion (these are the same thing in Lean).
- 
+
 #check MyNat
 #check MyNat.zero
 #check @MyNat.succ
@@ -47,7 +47,7 @@ instance : Zero MyNat where
   zero := MyNat.zero
 
 -- notation `1` for `MyNat.one`
-instance : One MyNat where 
+instance : One MyNat where
   one := MyNat.one
 
 -- notation `a + b` for `MyNat.add a b`
@@ -86,10 +86,10 @@ fun {_} t zero succ => MyNat.rec zero succ t
 -- do the base case! a + 0 = 0 + a; well, a + 0 = a by definition, but
 -- 0 + a isn't a by definition, it's a by induction. So let's prove this first.
 lemma zero_add (n : MyNat) : 0 + n = n := by
-  induction' n with d hd
-  { rfl } -- base case 0 + 0 = 0 true by definition
-  { rw [add_succ] -- inductive step
-    rw [hd] }
+  induction n with
+  | zero => rfl  -- base case 0 + 0 = 0 true by definition
+  | succ d ih => rw [add_succ]; rw [ih]  -- inductive step
+--  { rfl } -- base case 0 + 0 = 0 true by definition
 
 -- To prove the inductive step for a+b=b+a you need `succ_add`,
 -- the complement of `add_succ`. Note the naminh convention.
@@ -201,7 +201,7 @@ theorem one_mul (a : MyNat) : one * a = a := by
 
 theorem succ_mul (a b : MyNat) : succ a * b = a * b + b := by
   sorry
-  
+
 lemma mul_add (t a b : MyNat) : t * (a + b) = t * a + t * b := by
   sorry
 
